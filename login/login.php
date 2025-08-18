@@ -25,6 +25,7 @@ session_start();
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
+            <img src="../config/assets/dist/img/logo-sekolah.png" alt="Logo Sekolah" style="width:150px; height:auto; margin-bottom:10px;"><br>
             <a href="#"><b>Seleksi</b> Guru Terbaik </a>
         </div>
 

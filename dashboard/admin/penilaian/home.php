@@ -1,12 +1,14 @@
 <?php
 // Ambil semua alternatif dan kriteria
-$alternatif = mysqli_query($koneksidb, "SELECT * FROM alternatives ORDER BY code ASC");
+// $alternatif = mysqli_query($koneksidb, "SELECT * FROM alternatives ORDER BY code ASC");
+$alternatif = mysqli_query($koneksidb, "SELECT * FROM alternatives ORDER BY CAST(SUBSTRING(code, 2) AS UNSIGNED) ASC");
 $kriteria = mysqli_query($koneksidb, "SELECT * FROM criteria ORDER BY code ASC");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($_POST['nilai'] as $alt_id => $krit) {
         foreach ($krit as $krit_id => $data) {
-            $nilai = isset($data['score']) ? intval($data['score']) : null;
+            // $nilai = isset($data['score']) ? intval($data['score']) : null;
+            $nilai = isset($data['score']) ? $data['score'] : null;
             $sub_id = isset($data['sub_criterion_id']) ? (int) $data['sub_criterion_id'] : null;
 
             $cek = mysqli_query($koneksidb, "SELECT id FROM scores WHERE alternative_id = $alt_id AND criterion_id = $krit_id");
@@ -71,8 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php else: ?>
                                 <td>
                                     <input type="number" name="nilai[<?= $a['id'] ?>][<?= $k['id'] ?>][score]" 
-                                           class="form-control" min="0" step="1" 
-                                           value="<?= $score ? (int)$score['score'] : '' ?>" required>
+                                        class="form-control" min="0" step="0.0001" 
+                                        value="<?= $score ? htmlspecialchars($score['score']) : '' ?>" required>
+
                                 </td>
                             <?php endif;
                         endwhile; ?>

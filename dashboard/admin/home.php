@@ -56,6 +56,15 @@ while ($k = mysqli_fetch_assoc($kriteriaRadar)) {
     $kRata[] = $count > 0 ? round($total / $count, 2) : 0;
 }
 
+$queryTerbaik = "SELECT a.name AS nama_guru, a.code, u.username
+                 FROM results r
+                 JOIN alternatives a ON r.alternative_id = a.id
+                 JOIN users u ON a.user_id = u.id
+                 ORDER BY r.preference_value DESC
+                 LIMIT 1";
+
+$hasilTerbaik = mysqli_query($koneksidb, $queryTerbaik);
+$terbaik = mysqli_fetch_assoc($hasilTerbaik);
 ?>
 <div class="row">
     <!-- Jumlah Alternatif -->
@@ -121,12 +130,28 @@ while ($k = mysqli_fetch_assoc($kriteriaRadar)) {
             </a>
         </div>
     </div>
-
-
 </div>
 
-<div class="row mt-4">
-    <!-- Chart 1: Bar -->
+<div class="card mb-4">
+    <div class="card-header bg-success text-white">
+        <h3 class="card-title">Guru Terbaik Saat Ini</h3>
+    </div>
+    <div class="card-body">
+        <?php if ($terbaik): ?>
+            <p><strong>Nama:</strong> <?= htmlspecialchars($terbaik['nama_guru']) ?></p>
+            <p><strong>Kode:</strong> <?= htmlspecialchars($terbaik['code']) ?></p>
+            <p><strong>Username:</strong> <?= htmlspecialchars($terbaik['username']) ?></p>
+        <?php else: ?>
+            <p>Belum ada data perhitungan ranking.</p>
+        <?php endif; ?>
+    </div>
+    <div class="card-footer">
+        <span class="badge badge-success">#1 - Terbaik</span>
+    </div>
+</div>
+
+<!-- <div class="row mt-4">
+    Chart 1: Bar
     <div class="col-md-4 mb-4">
         <div class="card h-100">
             <div class="card-header">
@@ -138,7 +163,7 @@ while ($k = mysqli_fetch_assoc($kriteriaRadar)) {
         </div>
     </div>
 
-    <!-- Chart 2: Pie -->
+    Chart 2: Pie
     <div class="col-md-4 mb-4">
         <div class="card h-100">
             <div class="card-header">
@@ -150,7 +175,7 @@ while ($k = mysqli_fetch_assoc($kriteriaRadar)) {
         </div>
     </div>
 
-    <!-- Chart 3: Radar -->
+    Chart 3: Radar
     <div class="col-md-4 mb-4">
         <div class="card h-100">
             <div class="card-header">
@@ -161,7 +186,7 @@ while ($k = mysqli_fetch_assoc($kriteriaRadar)) {
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
