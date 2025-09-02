@@ -4,7 +4,7 @@ include '../../../config/koneksi.php';
 session_start();
 cek_admin();
 
-$page_title = 'Manajemen Calon Guru';
+$page_title = 'Manajemen Guru';
 $breadcrumbs = [
     ['title' => 'Home', 'link' => base_url('dashboard/admin')],
     ['title' => 'Management Guru']
