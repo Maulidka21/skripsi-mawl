@@ -1,0 +1,76 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36" version="27.1.6">
+  <diagram name="Page-1" id="ySEo2pzI__IBk6Nr22Vl">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="NQQCl49siNQj6SbDlwAs-24" value="" style="group" connectable="0" vertex="1" parent="1">
+          <mxGeometry x="-240" y="80" width="960" height="720" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-20" value="" style="group" connectable="0" vertex="1" parent="NQQCl49siNQj6SbDlwAs-24">
+          <mxGeometry x="320" width="640" height="720" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Kepala Sekolah&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;div style=&quot;height:2px;&quot;&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="NQQCl49siNQj6SbDlwAs-20">
+          <mxGeometry width="320" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Sistem&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;div style=&quot;height:2px;&quot;&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="NQQCl49siNQj6SbDlwAs-20">
+          <mxGeometry x="320" width="320" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-23" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Guru&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;div style=&quot;height:2px;&quot;&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="NQQCl49siNQj6SbDlwAs-24">
+          <mxGeometry width="320" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" edge="1" parent="NQQCl49siNQj6SbDlwAs-24" source="NQQCl49siNQj6SbDlwAs-10" target="NQQCl49siNQj6SbDlwAs-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-10" value="Melihat hasil perhitungan guru terbaik" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="NQQCl49siNQj6SbDlwAs-24">
+          <mxGeometry x="70" y="440" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-11" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="NQQCl49siNQj6SbDlwAs-24">
+          <mxGeometry x="140" y="540" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="NQQCl49siNQj6SbDlwAs-3" target="NQQCl49siNQj6SbDlwAs-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-3" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="220" y="140" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="NQQCl49siNQj6SbDlwAs-4" target="NQQCl49siNQj6SbDlwAs-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-4" value="Mengumpulkan data dari setiap guru" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="220" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="NQQCl49siNQj6SbDlwAs-5" target="NQQCl49siNQj6SbDlwAs-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-5" value="Menentuan kriteria dan skala penilaian" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="320" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NQQCl49siNQj6SbDlwAs-6" target="NQQCl49siNQj6SbDlwAs-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-6" value="Input data guru" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="420" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NQQCl49siNQj6SbDlwAs-7" target="NQQCl49siNQj6SbDlwAs-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-7" value="Melakukan perhitungan menggunakan metode ARAS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="420" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NQQCl49siNQj6SbDlwAs-8" target="NQQCl49siNQj6SbDlwAs-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-8" value="Menampilkan hasil akhir penilaian guru terbaik" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="520" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;fontColor=default;" edge="1" parent="1" source="NQQCl49siNQj6SbDlwAs-9" target="NQQCl49siNQj6SbDlwAs-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQQCl49siNQj6SbDlwAs-9" value="Melihat hasil perhitungan guru terbaik" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="520" width="180" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
