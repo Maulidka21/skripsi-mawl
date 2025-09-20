@@ -35,6 +35,7 @@ foreach ($alts as $alt_id => $alt) {
 }
 
 // 1. Matriks Keputusan
+$matriks_x = $matrix;
 echo "<h5>Matriks Keputusan</h5><table class='table table-bordered'><thead><tr><th>Alternatif</th>";
 foreach ($krit as $k) echo "<th>{$k['code']}</th>";
 echo "</tr></thead><tbody>";
@@ -45,50 +46,105 @@ foreach ($matrix as $aid => $nilai) {
 }
 echo "</tbody></table>";
 
-// 2. Normalisasi ARAS (xij / sum xij per kolom)
-$normalized = [];
-$sums = [];
+// -----------------------------------------------------------------------------
+// LANGKAH 2: Menentukan Nilai Optimal untuk Setiap Kriteria (x_0j)
+// -----------------------------------------------------------------------------
+$optimal_row = [];
 foreach ($krit as $k_id => $k) {
-    $sum = 0;
-    foreach ($matrix as $alt) {
-        $sum += $alt[$k_id];
-    }
-    $sums[$k_id] = $sum;
-}
+    $column = array_column($matriks_x, $k_id);
+    if (empty($column)) continue; // Lanjut jika kolom kosong
 
-foreach ($matrix as $alt_id => $nilai) {
-    foreach ($nilai as $k_id => $val) {
-        $normalized[$alt_id][$k_id] = $sums[$k_id] != 0 ? $val / $sums[$k_id] : 0;
+    if (strtolower($k['type']) === 'benefit') {
+        $optimal_row[$k_id] = max($column);
+    } else { // cost
+        $optimal_row[$k_id] = min($column);
     }
 }
 
-// 3. Normalisasi Terbobot
-$weighted = [];
-foreach ($normalized as $alt_id => $nilai) {
-    foreach ($nilai as $k_id => $val) {
-        $weighted[$alt_id][$k_id] = $val * $krit[$k_id]['weight'];
+// -----------------------------------------------------------------------------
+// LANGKAH 3: Normalisasi Matriks Keputusan (R)
+// -----------------------------------------------------------------------------
+$matriks_r = [];
+$extended_matriks = $matriks_x;
+// Tambahkan baris optimal ke awal matriks untuk perhitungan. Gunakan key '0' untuk menandainya.
+$extended_matriks[0] = $optimal_row;
+ksort($extended_matriks); // Urutkan array berdasarkan key agar baris 0 ada di paling atas
+
+// Hitung total per kolom untuk normalisasi
+$column_sums = [];
+foreach ($krit as $k_id => $k) {
+    $column_sums[$k_id] = 0;
+    foreach ($extended_matriks as $row) {
+        if (strtolower($k['type']) === 'cost') {
+            // Hindari pembagian dengan nol jika ada nilai 0
+            $column_sums[$k_id] += ($row[$k_id] > 0) ? (1 / $row[$k_id]) : 0;
+        } else { // benefit
+            $column_sums[$k_id] += $row[$k_id];
+        }
     }
 }
 
-// 4. Hitung nilai preferensi (Si = Σ terbobot)
-$preferensi = [];
-foreach ($weighted as $alt_id => $nilai) {
-    $preferensi[$alt_id] = round(array_sum($nilai), 4);
+// Lakukan normalisasi
+foreach ($extended_matriks as $alt_id => $row) {
+    foreach ($krit as $k_id => $k) {
+        if (strtolower($k['type']) === 'cost') {
+            $inversed_val = ($row[$k_id] > 0) ? (1 / $row[$k_id]) : 0;
+            $matriks_r[$alt_id][$k_id] = ($column_sums[$k_id] > 0) ? ($inversed_val / $column_sums[$k_id]) : 0;
+        } else { // benefit
+            $matriks_r[$alt_id][$k_id] = ($column_sums[$k_id] > 0) ? ($row[$k_id] / $column_sums[$k_id]) : 0;
+        }
+    }
 }
 
-// Simpan ke tabel results
-mysqli_query($koneksidb, "DELETE FROM results"); // Kosongkan dulu
-arsort($preferensi); // Urutkan dari tertinggi
+
+// -----------------------------------------------------------------------------
+// LANGKAH 4: Normalisasi Terbobot (V)
+// -----------------------------------------------------------------------------
+$matriks_v = [];
+foreach ($matriks_r as $alt_id => $row) {
+    foreach ($krit as $k_id => $k) {
+        $matriks_v[$alt_id][$k_id] = $row[$k_id] * $k['weight'];
+    }
+}
+
+// -----------------------------------------------------------------------------
+// LANGKAH 5: Menghitung Fungsi Optimalitas (S_i)
+// -----------------------------------------------------------------------------
+$fungsi_s = [];
+foreach ($matriks_v as $alt_id => $row) {
+    $fungsi_s[$alt_id] = array_sum($row);
+}
+
+// Ambil nilai S untuk baris optimal (S0)
+$s_optimal = $fungsi_s[0];
+
+// -----------------------------------------------------------------------------
+// LANGKAH 6: Menghitung Tingkat Utilitas (K_i)
+// -----------------------------------------------------------------------------
+$utilitas_k = [];
+// Loop hanya pada alternatif asli (skip baris optimal dengan key '0')
+foreach ($matriks_x as $alt_id => $row) {
+    $s_i = $fungsi_s[$alt_id];
+    $k_i = ($s_optimal > 0) ? ($s_i / $s_optimal) : 0;
+    $utilitas_k[$alt_id] = round($k_i, 4);
+}
+
+// -----------------------------------------------------------------------------
+// PERANKINGAN DAN PENYIMPANAN HASIL
+// -----------------------------------------------------------------------------
+mysqli_query($koneksidb, "DELETE FROM results"); // Kosongkan tabel hasil
+arsort($utilitas_k); // Urutkan skor Ki dari tertinggi ke terendah
+
 $rank = 1;
-foreach ($preferensi as $aid => $val) {
+foreach ($utilitas_k as $alt_id => $score) {
     mysqli_query($koneksidb, "
         INSERT INTO results (alternative_id, preference_value, ranking) 
-        VALUES ($aid, $val, $rank)
+        VALUES ($alt_id, $score, $rank)
     ");
     $rank++;
 }
 
-// Ambil hasil ranking
+// Ambil dan tampilkan hasil ranking (kode Anda untuk ini sudah benar)
 $ranking = mysqli_query($koneksidb, "
     SELECT r.*, a.code, a.name 
     FROM results r 
@@ -97,8 +153,8 @@ $ranking = mysqli_query($koneksidb, "
 ");
 
 // Tampilkan hasil ranking
-echo "<h5>Ranking Preferensi (ARAS - Tersimpan)</h5><table class='table table-bordered'><thead>
-<tr><th>Peringkat</th><th>Kode</th><th>Nama</th><th>Nilai Preferensi (S<sub>i</sub>)</th></tr></thead><tbody>";
+echo "<h5>Ranking Preferensi (ARAS - Final)</h5><table class='table table-bordered'><thead>
+<tr><th>Peringkat</th><th>Kode</th><th>Nama</th><th>Skor Utilitas (K<sub>i</sub>)</th></tr></thead><tbody>";
 while ($row = mysqli_fetch_assoc($ranking)) {
     $badge = ($row['ranking'] == 1) ? " <span class='badge bg-success'>Terbaik</span>" : "";
     echo "<tr>
